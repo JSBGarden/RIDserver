@@ -7,6 +7,7 @@ import java.awt.event.AWTEventListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -18,16 +19,18 @@ import com.project.remoteprotocol.global.Events;
 public class ServerConsole    {
 
 	static Robot robot=null;
-	static KeybordEvents keybordEvents=null;
+	static InputEvents inpuItEvents=null;
 	public static void main(String[] args) throws IOException {
 		    
 		try{
 			robot= new Robot();
-			keybordEvents=new KeybordEvents(robot);
+			inpuItEvents=new InputEvents(robot);
 
 
 		ServerSocket listener= new ServerSocket(8081);
 		//listener.setSoTimeout(10000);
+		InetAddress IP=InetAddress.getLocalHost();
+		System.out.println("Server IP Address="+(IP.getHostAddress()));
 		System.out.println("WATING FOR CLIENT ");
 
 		try{
@@ -65,10 +68,49 @@ public class ServerConsole    {
 						break;
 					}
 					String data[]=input.split(",");
-					if (data[0].equals(Events.POWER_POINT+""))//&& data.length==2)
-					{      							
-						keybordEvents.keyPress(Integer.parseInt(data[1]));
-					};				
+					int key1=Integer.parseInt(data[1]);
+					
+					switch (Integer.parseInt(data[0]))
+					{
+					
+					case Events.SINGLE_BUTTON_PRESS:					
+						try{
+						inpuItEvents.keyClick(key1);
+						}catch(Exception e){e.printStackTrace();}
+						break;
+					case Events.MOUSE_MOVE:						
+						int mouse_x = key1;
+						int mouse_y = Integer.parseInt(data[2]);												
+							inpuItEvents.mouseMove(mouse_x,mouse_y);						
+						break;
+					case Events.MOUSE_CLICK:						
+						inpuItEvents.mouseClick(key1);
+						break;
+					case Events.BUTTON_PRESS:
+						inpuItEvents.keyPress(key1);
+						break;
+						
+					case Events.BUTTON_RELEASE:
+						inpuItEvents.keyRelease(key1);
+						break;
+						
+					case Events.MOUSE_BUTTON_DOWN:
+						inpuItEvents.mouseButtonDown(key1);
+						break;
+						
+					case Events.MOUSE_BUTTON_UP:
+						inpuItEvents.mouseButtonUp(key1);
+						break;
+					
+					case Events.COMBINATION_BUTTON_PRESS:
+						int key2=Integer.parseInt(data[2]);
+						inpuItEvents.keyClick(key1,key2);
+						break;
+					case Events.KEYBORD_KEY_DOWN:
+						inpuItEvents.keybordButton(key1);
+						break;
+					};
+							
 					
 					
 
@@ -77,72 +119,13 @@ public class ServerConsole    {
 
 			} finally{
 				try {
+					
 					socket.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
-
 			}
-
 		}
-
-
 	}
 }
-
-
-
-
-
-
-
-
-	/*		Socket clientSocket = null;
-		ServerSocket serverSocket = null;
-		int count =0 ;
-		try{
-			robot= new Robot();
-			keybordEvents=new KeybordEvents(robot);
-
-			serverSocket = new ServerSocket(8081);
-		      serverSocket.setSoTimeout(10000);
-				System.out.println("WATING FOR CLIENT ");
-				clientSocket = serverSocket.accept();
-				System.out.println("CLIENT FOUND");
-			System.out.println("server started....");
-			while (true){
-				System.out.println("count :" + count++);
-				System.out.println("_________________");
-
-				//	BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputS­tream()));
-				Scanner in1 = new Scanner(clientSocket.getInputStream());
-				System.out.println("new scanner");
-				String mes; 
-
-
-				int innerCount = 0;
-				while(in1.hasNext()){
-					System.out.println("INNERCOUNT :" + innerCount++);
-					System.out.println("_________________");
-					System.out.println("enter while");
-					mes=in1.nextLine();
-					System.out.println("get msg");
-					String data[]=mes.split(",");
-					System.out.println("Client message :"+mes);
-
-					System.out.println("before if");
-					if (data[0].equals("1"))//&& data.length==2)
-					{        							
-						System.out.println("inside if");
-						keybordEvents.keyPress(Integer.parseInt(data[1]));
-					};
-					System.out.println("outside if");
-
-
-				}
-				in1.close();
-			}
-		}catch(Exception e){} //read & display the message		
-	}*/
-
 
