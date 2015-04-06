@@ -6,8 +6,11 @@ import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Robot;
 
+import com.project.remoteprotocol.global.Buttons;
+
 public class InputEvents {
 	public Robot robot;
+	private static Boolean isShiftPress;
 
 	//consturctor
 	public InputEvents(Robot robot) {
@@ -81,9 +84,24 @@ public class InputEvents {
 
 
 	public void keybordButton(int key1) {
+		switch (key1)
+		{
+		case 59:
+			isShiftPress=true;			
+		default:
 		if (key1>=29 && key1<=54){
-			keyClick(key1+36);
+			if (isShiftPress==false)
+				keyClick(key1+36);
+			else
+			{
+				keyPress(Buttons.PRESS_SHIFT);
+				keyClick(key1+36);
+				keyRelease(Buttons.PRESS_SHIFT);
+				isShiftPress=false;
+			}
 		}
+		}
+		
 		// TODO Auto-generated method stub
 		
 	}
