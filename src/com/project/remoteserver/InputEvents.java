@@ -84,6 +84,7 @@ public class InputEvents {
 
 
 	public void keybordButton(int key1) {
+		try{
 		switch (key1)
 		{
 		case 59:
@@ -95,13 +96,19 @@ public class InputEvents {
 			else
 			{
 				keyPress(Buttons.PRESS_SHIFT);
-				keyClick(key1+36);
+				keyClick(Buttons.FIRST_ALPHABET+key1+-29);
 				keyRelease(Buttons.PRESS_SHIFT);
 				isShiftPress=false;
 			}
 		}
-		}
+			else if (key1>=7 && key1<=16)
+				keyClick(Buttons.FIRST_NUMBER+key1-7);
 		
+		}
+		}
+		catch (Exception e){
+			e.printStackTrace();
+		}
 		// TODO Auto-generated method stub
 		
 	}
