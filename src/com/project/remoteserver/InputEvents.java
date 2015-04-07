@@ -10,7 +10,7 @@ import com.project.remoteprotocol.global.Buttons;
 
 public class InputEvents {
 	public Robot robot;
-	private static Boolean isShiftPress;
+	private static Boolean isShiftPress=false;
 
 	//consturctor
 	public InputEvents(Robot robot) {
