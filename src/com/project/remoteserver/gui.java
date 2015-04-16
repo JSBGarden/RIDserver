@@ -86,6 +86,8 @@ public class gui extends JFrame {
 						ServerSocket listener= new ServerSocket(8081);
 						//listener.setSoTimeout(10000);
 						InetAddress IP=InetAddress.getLocalHost();
+						IP.getHostAddress();
+						
 						System.out.println("Server IP Address="+(IP.getHostAddress()));
 						System.out.println("WATING FOR CLIENT ");
 
