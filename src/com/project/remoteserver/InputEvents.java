@@ -1,10 +1,12 @@
 package com.project.remoteserver;
 
 import java.awt.AWTException;
+import java.awt.event.KeyEvent;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Robot;
+import java.awt.event.KeyEvent;
 
 import com.project.remoteprotocol.global.Buttons;
 
@@ -102,8 +104,14 @@ public class InputEvents {
 			}
 		}
 			else if (key1>=7 && key1<=16)
+				if (isShiftPress==false){
 				keyClick(Buttons.FIRST_NUMBER+key1-7);
-		
+				}
+				else {
+					
+					keyClick(specialKeys(key1));
+					isShiftPress=false;
+				}
 		}
 		}
 		catch (Exception e){
@@ -111,6 +119,37 @@ public class InputEvents {
 		}
 		// TODO Auto-generated method stub
 		
+	}
+	
+	
+	public int specialKeys(int key)
+	{
+		int a=0;
+		switch(key)
+		{
+		case 7:
+			a=KeyEvent.VK_RIGHT_PARENTHESIS;
+			break;
+		case 8:
+			a=KeyEvent.VK_EXCLAMATION_MARK;
+			break;
+		case 9:
+			a=KeyEvent.VK_AT;
+			break;
+		case 10:
+			a=KeyEvent.VK_NUMBER_SIGN;
+			break;
+		case 11:
+			a=KeyEvent.VK_DOLLAR;
+			break;
+		//case 12:
+			//return KeyEvent.VK_PERCENT;
+		case 13:
+			a=KeyEvent.VK_CIRCUMFLEX;
+			break;
+		
+		}
+		return a;
 	}
  	
 }
