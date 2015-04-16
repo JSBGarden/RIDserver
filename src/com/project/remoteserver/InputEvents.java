@@ -153,10 +153,7 @@ public class InputEvents {
 		case 56:
 			a=46;
 			break;
-			//`
-		case 68:
-			a=192;
-			break;
+			//`~68   
 		case 69:  
 			a=45;
 			break;
