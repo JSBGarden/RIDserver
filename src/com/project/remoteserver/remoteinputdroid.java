@@ -27,6 +27,7 @@ import com.project.remoteprotocol.global.Events;
  * @author mintjunk
  */
 public class remoteinputdroid extends javax.swing.JFrame {
+
     private Preferences pref;
    int okpass;
    	static Robot robot=null;
@@ -39,7 +40,7 @@ public class remoteinputdroid extends javax.swing.JFrame {
     /**
      * Creates new form remoteinputdroid
      */
-    public int numberOfDevices;
+   public static int numberOfDevices;
     
     
     public remoteinputdroid() {
@@ -225,7 +226,8 @@ if(okport==JOptionPane.OK_OPTION)
         pref=Preferences.userRoot().node(this.getClass().getName());
         
         showIP();    
-        socketProgramming();
+        new SocketThread(null).start();
+        
          
     }//GEN-LAST:event_formWindowOpened
 
@@ -276,32 +278,36 @@ if(okport==JOptionPane.OK_OPTION)
     
     
     
-    private void socketProgramming()
-    {
-        try {
-            robot = new Robot();
-            inpuItEvents = new InputEvents(robot);
 
-            ServerSocket listener = new ServerSocket(8081);
-            //listener.setSoTimeout(10000);
-            InetAddress IP = InetAddress.getLocalHost();
-            System.out.println("Server IP Address=" + (IP.getHostAddress()));
-            System.out.println("WATING FOR CLIENT ");
-
-            try {
-                while (true) {
-                    new ClientDealer(listener.accept()).start();
-                }
-
-            } finally {
-                listener.close();
-            }
-        } catch (Exception e) {
-        }
-
-    }
     
 
+    
+    private static class SocketThread extends Thread {
+		private Socket socket;
+
+		public SocketThread(Socket socket){
+					 
+		}
+		public void run() {
+			
+			 try {
+		            robot = new Robot();
+		            inpuItEvents = new InputEvents(robot);
+
+		            ServerSocket listener = new ServerSocket(8081);		            		            
+		            try {
+		                while (true) {
+		                    new ClientDealer(listener.accept()).start();
+		                }
+		            } finally {
+		                listener.close();
+		            }
+		        } catch (Exception e) {
+		        }
+			
+		}
+    }
+    
 
     private static class ClientDealer extends Thread {
 		private Socket socket;
@@ -313,6 +319,10 @@ if(okport==JOptionPane.OK_OPTION)
 
 		public void run() {
 			try{
+				remoteinputdroid.numberOfDevices++;
+				remoteinputdroid r = new remoteinputdroid();
+				r.updateClients();
+				
 				System.out.println("client found");
 				BufferedReader in =new BufferedReader(
 						new InputStreamReader(socket.getInputStream()));
@@ -375,7 +385,7 @@ if(okport==JOptionPane.OK_OPTION)
 
 			} finally{
 				try {
-					
+					remoteinputdroid.numberOfDevices--;
 					socket.close();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -385,9 +395,13 @@ if(okport==JOptionPane.OK_OPTION)
 	}
 
 
+    //function to display number of clients connected
+    public void updateClients(){
+    	lblnumberdevice.setText(remoteinputdroid.numberOfDevices+"");
+    }
     
-    //function to display ip address of the server
     
+    //function to display ip address of the server    
     private void showIP(){
         String ip;
     try {
