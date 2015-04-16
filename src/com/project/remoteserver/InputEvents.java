@@ -29,7 +29,7 @@ public class InputEvents {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void keyRelease(int key1){
 		try {     
 			Robot robot = new Robot();
@@ -71,7 +71,7 @@ public class InputEvents {
 		int y_old = (int) mousePosition.getY();
 		robot.mouseMove(x+x_old, y+y_old); 	
 	}
-	
+
 	public void mouseClick(int mouse_button)	  {
 		robot.mousePress(mouse_button);
 		robot.mouseRelease(mouse_button);		
@@ -87,69 +87,111 @@ public class InputEvents {
 
 	public void keybordButton(int key1) {
 		try{
-		switch (key1)
-		{
-		case 59:
-			isShiftPress=true;			
-		default:
-		if (key1>=29 && key1<=54){
-			if (isShiftPress==false)
-				keyClick(key1+36);
-			else
+			switch (key1)
 			{
-				keyPress(Buttons.PRESS_SHIFT);
-				keyClick(Buttons.FIRST_ALPHABET+key1+-29);
-				keyRelease(Buttons.PRESS_SHIFT);
-				isShiftPress=false;
-			}
-		}
-			else if (key1>=7 && key1<=16)
-				if (isShiftPress==false){
-				keyClick(Buttons.FIRST_NUMBER+key1-7);
+			case 59:
+				isShiftPress=true;			
+			default:
+
+				//activvate shift
+				if (isShiftPress==true)
+				{
+					keyPress(Buttons.PRESS_SHIFT);
 				}
-				else {
-					
+				
+				//Alphabet
+				if (key1>=29 && key1<=54){			
+					keyClick(Buttons.FIRST_ALPHABET+key1+-29);			
+				}
+				//Numbers and their SHIFTS
+				else if (key1>=7 && key1<=16){
+					keyClick(Buttons.FIRST_NUMBER+key1-7);
+				}
+				else{
+					//others
+					if (specialKeys(key1)!= 0)
 					keyClick(specialKeys(key1));
+				}
+					
+					
+				
+				
+				//dactivate shift 
+				if (isShiftPress==true)
+				{
+					keyRelease(Buttons.PRESS_SHIFT);
 					isShiftPress=false;
 				}
-		}
+
+				/*
+			else {
+					System.out.println("yes shift");
+					keyPress(Buttons.PRESS_SHIFT);
+					keyClick(Buttons.FIRST_NUMBER+key1-7);
+					keyRelease(Buttons.PRESS_SHIFT);
+					isShiftPress=false;
+				}*/
+			}
 		}
 		catch (Exception e){
 			e.printStackTrace();
 		}
 		// TODO Auto-generated method stub
-		
+
 	}
-	
-	
+
+
 	public int specialKeys(int key)
 	{
 		int a=0;
 		switch(key)
 		{
-		case 7:
-			a=KeyEvent.VK_RIGHT_PARENTHESIS;
+		case 55:  
+			a=44;
 			break;
-		case 8:
-			a=KeyEvent.VK_EXCLAMATION_MARK;
+
+		case 56:
+			a=46;
 			break;
-		case 9:
-			a=KeyEvent.VK_AT;
+			//`~68   
+		case 69:  
+			a=45;
 			break;
-		case 10:
-			a=KeyEvent.VK_NUMBER_SIGN;
+		case 70:
+			a=61;
 			break;
-		case 11:
-			a=KeyEvent.VK_DOLLAR;
+		case 71:  
+			a=161;
 			break;
-		//case 12:
-			//return KeyEvent.VK_PERCENT;
-		case 13:
-			a=KeyEvent.VK_CIRCUMFLEX;
+		case 72:
+			a=162;
 			break;
-		
+		case 73:
+			a=92;
+			break;
+		case 74:
+			a=59;
+			break;
+		case 75:
+			a=222;
+			break;
+		case 76:
+			a=47;
+			break;
+		case 61:  
+			a=9;
+			break;
+		case 67:
+			a=8;
+			break;
+		case 62:
+			a=32;
+			break;
+		case 66:
+			a=10;
+			break;
 		}
 		return a;
 	}
- 	
+
 }
