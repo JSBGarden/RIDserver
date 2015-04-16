@@ -90,7 +90,8 @@ public class InputEvents {
 			switch (key1)
 			{
 			case 59:
-				isShiftPress=true;			
+				isShiftPress=true;	
+				break;
 			default:
 
 				//activvate shift
