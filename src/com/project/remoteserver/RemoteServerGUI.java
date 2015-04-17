@@ -28,7 +28,7 @@ import com.project.remoteprotocol.global.Events;
  */
 public class RemoteServerGUI extends javax.swing.JFrame {
 
-	private Preferences pref;
+	private ServerPreferences Prefer = new ServerPreferences();
 	int okpass;
 	static Robot robot=null;
 	static InputEvents inpuItEvents=null;
@@ -200,7 +200,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 
 	private void menuItemChangePortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemChangePortActionPerformed
 		String port1=JOptionPane.showInputDialog("Enter new Port:");
-		pref.putInt("port", Integer.parseInt(port1));
+		Prefer.setPort(Integer.parseInt(port1));
 		
 		// TODO add your handling code here:
 	}//GEN-LAST:event_menuItemChangePortActionPerformed
@@ -212,13 +212,13 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 		if(okport==JOptionPane.OK_OPTION)
 		{
 			String pass1=new String(jp2.getPassword());
-			pref.put("pass",pass1);
+			Prefer.setPassword(pass1);
 		}
 		// TODO add your handlig code here:
 	}//GEN-LAST:event_menuItemChangePasswordActionPerformed
 
 	private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-		pref=Preferences.userRoot().node(this.getClass().getName());
+		///
 
 		showIP();    
 		new SocketThread(null).start();
@@ -227,12 +227,12 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 	}//GEN-LAST:event_formWindowOpened
 
 	private void menuItemShowPortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemShowPortActionPerformed
-		JOptionPane.showMessageDialog(null,"The current port is: "+(pref.getInt("port", 5555)));
+		JOptionPane.showMessageDialog(null,"The current port is: "+(Prefer.getPort()));
 		// TODO add your handling code here:
 	}//GEN-LAST:event_menuItemShowPortActionPerformed
 
 	private void menuItemShowPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemShowPasswordActionPerformed
-		JOptionPane.showMessageDialog(null,"The current passis: "+(pref.get("pass", "a")));        // TODO add your handling code here:
+		JOptionPane.showMessageDialog(null,"The current pass is: "+(Prefer.getPassword()));        // TODO add your handling code here:
 	}//GEN-LAST:event_menuItemShowPasswordActionPerformed
 
 	/**
@@ -279,6 +279,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 
 	private static class SocketThread extends Thread {
 		private Socket socket;
+		private ServerPreferences Prefer= new ServerPreferences();
 
 		public SocketThread(Socket socket){
 
@@ -289,7 +290,8 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 				robot = new Robot();
 				inpuItEvents = new InputEvents(robot);
 
-				ServerSocket listener = new ServerSocket(8081);		            		            
+				ServerSocket listener = new ServerSocket(Prefer.getPort());
+				System.out.println(Prefer.getPort()+"");
 				try {
 					while (true) {
 						new ClientDealer(listener.accept()).start();
