@@ -26,7 +26,7 @@ import com.project.remoteprotocol.global.Events;
  *
  * @author mintjunk
  */
-public class remoteinputdroid extends javax.swing.JFrame {
+public class RemoteServerGUI extends javax.swing.JFrame {
 
     private Preferences pref;
    int okpass;
@@ -43,7 +43,7 @@ public class remoteinputdroid extends javax.swing.JFrame {
    public static int numberOfDevices;
     
     
-    public remoteinputdroid() {
+    public RemoteServerGUI() {
         
         initComponents();
         numberOfDevices=0;
@@ -257,13 +257,13 @@ if(okport==JOptionPane.OK_OPTION)
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(remoteinputdroid.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoteServerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(remoteinputdroid.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoteServerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(remoteinputdroid.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoteServerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(remoteinputdroid.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RemoteServerGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -271,7 +271,7 @@ if(okport==JOptionPane.OK_OPTION)
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new remoteinputdroid().setVisible(true);
+                new RemoteServerGUI().setVisible(true);
             }
         });
     }
@@ -319,8 +319,8 @@ if(okport==JOptionPane.OK_OPTION)
 
 		public void run() {
 			try{
-				remoteinputdroid.numberOfDevices++;
-				remoteinputdroid r = new remoteinputdroid();
+				RemoteServerGUI.numberOfDevices++;
+				RemoteServerGUI r = new RemoteServerGUI();
 				r.updateClients();
 				
 				System.out.println("client found");
@@ -385,7 +385,7 @@ if(okport==JOptionPane.OK_OPTION)
 
 			} finally{
 				try {
-					remoteinputdroid.numberOfDevices--;
+					RemoteServerGUI.numberOfDevices--;
 					socket.close();
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -397,7 +397,7 @@ if(okport==JOptionPane.OK_OPTION)
 
     //function to display number of clients connected
     public void updateClients(){
-    	lblnumberdevice.setText(remoteinputdroid.numberOfDevices+"");
+    	lblnumberdevice.setText(RemoteServerGUI.numberOfDevices+"");
     }
     
     
