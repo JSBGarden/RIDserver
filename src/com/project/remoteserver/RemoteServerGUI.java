@@ -13,6 +13,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.prefs.Preferences;
 
@@ -401,7 +402,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 	//function to display ip address of the server    
 	private void showIP(){
 		String ip;
-		try {
+		/*try {
 			Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
 			while (interfaces.hasMoreElements()) {
 				NetworkInterface iface = interfaces.nextElement();
@@ -418,7 +419,17 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 			}
 		} catch (Exception e) {
 			throw new RuntimeException(e);
+		}*/
+		try {
+			InetAddress IP=InetAddress.getLocalHost();
+			ip=IP.getHostAddress();
+			lblIpaddress.setText(ip);
+		} catch (UnknownHostException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		
+		
 	}
 
 	// Variables declaration - do not modify//GEN-BEGIN:variables
