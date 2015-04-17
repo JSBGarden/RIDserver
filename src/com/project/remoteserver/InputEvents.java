@@ -12,8 +12,8 @@ import com.project.remoteprotocol.global.Buttons;
 
 public class InputEvents {
 	public Robot robot;
-	private static Boolean isShiftPress=false;
-
+	private static Boolean isShiftPress=false,isAltPress=false,isCtrlPress=false;
+	
 	//consturctor
 	public InputEvents(Robot robot) {
 		this.robot=robot;
@@ -90,23 +90,30 @@ public class InputEvents {
 			switch (key1)
 			{
 			case 59:
+				keyPress(KeyEvent.VK_SHIFT);
 				isShiftPress=true;	
 				break;
+			case 57:
+				keyPress(KeyEvent.VK_ALT);
+				isAltPress=true;
+				break;
+			case 113:
+				keyPress(KeyEvent.VK_CONTROL);
+				isCtrlPress=true;
+				break;
 			default:
-
-				//activvate shift
-				if (isShiftPress==true)
-				{
-					keyPress(Buttons.PRESS_SHIFT);
-				}
 				
 				//Alphabet
 				if (key1>=29 && key1<=54){			
-					keyClick(Buttons.FIRST_ALPHABET+key1+-29);			
+					keyClick(KeyEvent.VK_A+key1+-29);			
 				}
-				//Numbers and their SHIFTS
+				//Numbers 
 				else if (key1>=7 && key1<=16){
-					keyClick(Buttons.FIRST_NUMBER+key1-7);
+					keyClick(KeyEvent.VK_0+key1-7);
+				}
+				//FN KEYS 
+				else if (key1>=131 && key1 <=142){
+					keyClick(KeyEvent.VK_F1+key1-131);
 				}
 				else{
 					//others
@@ -120,8 +127,18 @@ public class InputEvents {
 				//dactivate shift 
 				if (isShiftPress==true)
 				{
-					keyRelease(Buttons.PRESS_SHIFT);
+					keyRelease(KeyEvent.VK_SHIFT);
 					isShiftPress=false;
+				}
+				if (isCtrlPress==true)
+				{
+					keyRelease(KeyEvent.VK_CONTROL);
+					isCtrlPress=false;
+				}
+				if (isAltPress==true)
+				{
+					keyRelease(KeyEvent.VK_ALT);
+					isAltPress=false;
 				}
 
 				/*
@@ -191,6 +208,47 @@ public class InputEvents {
 		case 66:
 			a=10;
 			break;
+		case 111:
+			a=KeyEvent.VK_ESCAPE;
+			break;
+		case 19:
+			a=KeyEvent.VK_UP;
+			break;	
+		case 20:
+			a=KeyEvent.VK_DOWN;
+			break;
+		case 21:
+			a=KeyEvent.VK_LEFT;
+			break;
+		case 22:
+			a=KeyEvent.VK_RIGHT;
+			break;
+			
+		case 122:
+			a=KeyEvent.VK_HOME;
+		
+			break;
+		case 123:
+			a=KeyEvent.VK_END;
+			break;
+		case 92:
+			a=KeyEvent.VK_PAGE_UP;
+			break;
+		case 93:
+			a=KeyEvent.VK_PAGE_DOWN;
+			break;
+		case 124:
+			a=KeyEvent.VK_INSERT;
+			break;
+		case 112:
+			a=KeyEvent.VK_DELETE;
+			break;
+		
+			
+				
+			
+				
+		
 		}
 		return a;
 	}
