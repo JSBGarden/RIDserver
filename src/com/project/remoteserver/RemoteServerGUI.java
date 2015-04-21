@@ -279,7 +279,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 
 
 	private static class SocketThread extends Thread {
-		private Socket socket;
+		
 		private ServerPreferences Prefer= new ServerPreferences();
 
 		public SocketThread(Socket socket){
@@ -291,7 +291,8 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 				robot = new Robot();
 				inpuItEvents = new InputEvents(robot);
 
-				ServerSocket listener = new ServerSocket(Prefer.getPort());
+				int port1=Prefer.getPort();
+				ServerSocket listener = new ServerSocket(port1);
 				System.out.println(Prefer.getPort()+"");
 				try {
 					while (true) {
