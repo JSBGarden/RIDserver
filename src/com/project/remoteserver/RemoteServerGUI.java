@@ -7,6 +7,7 @@ package com.project.remoteserver;
 
 import java.awt.Robot;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
@@ -14,6 +15,7 @@ import java.net.NetworkInterface;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.prefs.Preferences;
 
@@ -202,6 +204,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 	private void menuItemChangePortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemChangePortActionPerformed
 		String port1=JOptionPane.showInputDialog("Enter new Port:");
 		Prefer.setPort(Integer.parseInt(port1));
+		 
 		
 		// TODO add your handling code here:
 	}//GEN-LAST:event_menuItemChangePortActionPerformed
@@ -214,6 +217,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 		{
 			String pass1=new String(jp2.getPassword());
 			Prefer.setPassword(pass1);
+			
 		}
 		// TODO add your handlig code here:
 	}//GEN-LAST:event_menuItemChangePasswordActionPerformed
@@ -432,7 +436,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 		
 		
 	}
-
+		
 	// Variables declaration - do not modify//GEN-BEGIN:variables
 	private javax.swing.JLabel jLabel1;
 	private javax.swing.JLabel jLabel2;
