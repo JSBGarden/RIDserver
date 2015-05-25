@@ -23,7 +23,7 @@ import java.util.prefs.Preferences;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
+
 import javax.swing.Timer;
 
 import com.project.remoteprotocol.global.Events;
@@ -39,12 +39,12 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 	private Timer timer;
 	
 	
-	int okpass;
+	
 	static Robot robot=null;
 	static InputEvents inpuItEvents=null;
 	int okport;
 
-	private String port="",pass="";
+	private String port="";
 	private JPanel contentPane;
 
 	/**
@@ -55,7 +55,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 
 	public RemoteServerGUI() {
 
-		timer = new Timer(4000, new ActionListener() {
+		timer = new Timer(2000, new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
@@ -92,8 +92,6 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 		jMenuItem1 = new javax.swing.JMenuItem();
 		jMenu2 = new javax.swing.JMenu();
 		menuItemChangePort = new javax.swing.JMenuItem();
-		menuItemChangePassword = new javax.swing.JMenuItem();
-		menuItemShowPassword = new javax.swing.JMenuItem();
 		menuItemShowPort = new javax.swing.JMenuItem();
 		jMenu3 = new javax.swing.JMenu();
 		jMenuItem4 = new javax.swing.JMenuItem();
@@ -135,22 +133,6 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 			}
 		});
 		jMenu2.add(menuItemChangePort);
-
-		menuItemChangePassword.setText("Change Password");
-		menuItemChangePassword.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				menuItemChangePasswordActionPerformed(evt);
-			}
-		});
-		jMenu2.add(menuItemChangePassword);
-
-		menuItemShowPassword.setText("Show Password");
-		menuItemShowPassword.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				menuItemShowPasswordActionPerformed(evt);
-			}
-		});
-		jMenu2.add(menuItemShowPassword);
 
 		menuItemShowPort.setText("Show Port");
 		menuItemShowPort.addActionListener(new java.awt.event.ActionListener() {
@@ -227,21 +209,11 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 		// TODO add your handling code here:
 	}//GEN-LAST:event_menuItemChangePortActionPerformed
 
-	private void menuItemChangePasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemChangePasswordActionPerformed
+	
 
-		JPasswordField jp2=new JPasswordField();
-		okpass=JOptionPane.showConfirmDialog(null,jp2,"Please enter New port number:",JOptionPane.PLAIN_MESSAGE);
-		if(okport==JOptionPane.OK_OPTION)
-		{
-			String pass1=new String(jp2.getPassword());
-			Prefer.setPassword(pass1);
-			
-		}
-		// TODO add your handlig code here:
-	}//GEN-LAST:event_menuItemChangePasswordActionPerformed
-
+		
 	private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-		///
+	
 
 		showIP();    
 		new SocketThread(null).start();
@@ -406,7 +378,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 
 				}
 				//Client has been disconnected
-				RemoteServerGUI.numberOfDevices-=1/2;//the statement is called twice so 1/2
+				RemoteServerGUI.numberOfDevices-=1/2;//the statement is called twice so 1
 			} catch(Exception e){
 
 			} finally{
