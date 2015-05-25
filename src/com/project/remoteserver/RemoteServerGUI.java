@@ -6,6 +6,8 @@
 package com.project.remoteserver;
 
 import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +24,7 @@ import java.util.prefs.Preferences;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.Timer;
 
 import com.project.remoteprotocol.global.Events;
 
@@ -32,6 +35,10 @@ import com.project.remoteprotocol.global.Events;
 public class RemoteServerGUI extends javax.swing.JFrame {
 
 	private ServerPreferences Prefer = new ServerPreferences();
+	
+	private Timer timer;
+	
+	
 	int okpass;
 	static Robot robot=null;
 	static InputEvents inpuItEvents=null;
@@ -43,13 +50,24 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 	/**
 	 * Creates new form remoteinputdroid
 	 */
-	public static int numberOfDevices;
+	public static int numberOfDevices=0;
 
 
 	public RemoteServerGUI() {
 
+		timer = new Timer(4000, new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				int current_device=Integer.parseInt(lblnumberdevice.getText());
+				if (current_device!=RemoteServerGUI.numberOfDevices){
+					lblnumberdevice.setText(RemoteServerGUI.numberOfDevices+"");
+				}
+				
+			}
+		});
 		initComponents();
-		numberOfDevices=0;
+		timer.start();
 
 
 
@@ -292,6 +310,7 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 		public void run() {
 
 			try {
+				
 				robot = new Robot();
 				inpuItEvents = new InputEvents(robot);
 
@@ -334,6 +353,8 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 					String input=in.readLine();
 					System.out.println(input);
 					if (input == null ) {
+						
+						
 						break;
 					}
 					String data[]=input.split(",");
@@ -384,6 +405,8 @@ public class RemoteServerGUI extends javax.swing.JFrame {
 
 
 				}
+				//Client has been disconnected
+				RemoteServerGUI.numberOfDevices-=1/2;//the statement is called twice so 1/2
 			} catch(Exception e){
 
 			} finally{
